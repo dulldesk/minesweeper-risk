@@ -169,17 +169,12 @@ class Board extends React.Component {
       tool: (this.state.tool === TOOLS.DIG ? TOOLS.CLEAR : TOOLS.DIG)
     });
   }
-  // addClue(list, dir, bombs, total) {
-  //   list.push(<Clue dir={dir} value={bombs} total={total} key={[dir, row, col].join("-")} />);
-  // }
   addClue(list, dir, row, col) {
     const row_type = CountBombs.get_row_type(dir);
     let extra_arg;
     if (row_type === "vertical") extra_arg = this.size;
     else if (row_type === "back_diagonal" || row_type === "forward_diagonal") extra_arg = this.grid_col_to_square_col;
 
-    let counts = CountBombs[row_type](this.state.squares, row, col, extra_arg);
-    list.push(<Clue dir={dir} value={counts.bombs} total={counts.unknown} key={[dir, row, col].join("-")} />);
   }
   display_clues(row, col) {
     let n = this.size;
@@ -194,65 +189,35 @@ class Board extends React.Component {
     
     // NW / SE 
     if (row < half_n_floored && col === 0) {
-      // let counts = CountBombs.back_diagonal(squares, row, col, this.grid_col_to_square_col);
       this.addClue(clues,"SE", row, col, this.grid_col_to_square_col);
-      // this.addClue(clues,"SE",counts.bombs,counts.unknown);
-      // clues.push(<Clue dir="SE" value={counts.bombs} total={counts.unknown} key={"SE-" + row + "-" + col} />);
-      // clues.push(<Clue dir="SE" value={CountBombs.back_diagonal(squares, row, col, this.grid_col_to_square_col)} total={CountBombs.back_diagonal(squares, row, col, this.grid_col_to_square_col, true)} key={"SE-" + row + "-" + col} />);
     } 
     else if (row >= max_len - half_n_floored && col === row_len - 1) {
-      // let counts = CountBombs.back_diagonal(squares, row, col, this.grid_col_to_square_col);
       this.addClue(clues,"NW", row, col, this.grid_col_to_square_col);
-      // this.addClue(clues,"NW",counts.bombs,counts.unknown);
-      // clues.push(<Clue dir="NW" value={counts.bombs} total={counts.unknown} key={"NW-" + row + "-" + col} />);
-      // clues.push(<Clue dir="NW" value={CountBombs.back_diagonal(squares, row, col, this.grid_col_to_square_col)} total={CountBombs.back_diagonal(squares, row, col, this.grid_col_to_square_col, true)} key={"NW-" + row + "-" + col} />);
     }
     
     // NE / SW
     if (row > half_n_floored && row < max_len - half_n_floored && col === 0) {
-      // let counts = CountBombs.forward_diagonal(squares, row, col, this.grid_col_to_square_col);
       this.addClue(clues,"NE",row, col,this.grid_col_to_square_col);
-      // this.addClue(clues,"NE",counts.bombs,counts.unknown);
-      // clues.push(<Clue dir="NE" value={counts.bombs} total={counts.unknown} key={"NE-" + row + "-" + col} />);
-      // clues.push(<Clue dir="NE" value={CountBombs.forward_diagonal(squares, row, col, this.grid_col_to_square_col)} total={CountBombs.forward_diagonal(squares, row, col, this.grid_col_to_square_col, true)} key={"NE-" + row + "-" + col} />);
     } 
     else if (row < n && row >= half_n_floored && col === row_len - 1) {
-      // let counts = CountBombs.forward_diagonal(squares, row, col, this.grid_col_to_square_col);
       this.addClue(clues,"SW",row, col,this.grid_col_to_square_col);
-      // this.addClue(clues,"SW",counts.bombs,counts.unknown);
-      // clues.push(<Clue dir="SW" value={counts.bombs} total={counts.unknown} key={"SW-" + row + "-" + col} />);
-      // clues.push(<Clue dir="SW" value={CountBombs.forward_diagonal(squares, row, col, this.grid_col_to_square_col)} total={CountBombs.forward_diagonal(squares, row, col, this.grid_col_to_square_col, true)} key={"SW-" + row + "-" + col} />);
     }
 
     // N / S
     if (col_len >= Math.max(3, half_max_len_floored - max_len % 2)) {
-      // let counts = CountBombs.vertical(squares, row, col, n);
       if (row > half_n_floored && col === 0 && row !== max_len-1) {
         this.addClue(clues,"N",row, col, n);
-        // this.addClue(clues,"N",counts.bombs,counts.unknown);
-        // clues.push(<Clue dir="N" value={counts.bombs} total={counts.unknown} key={"N-" + row + "-" + col} />);
-        // clues.push(<Clue dir="N" value={CountBombs.vertical(squares, row, col, n)} total={CountBombs.vertical(squares, row, col, n, true)} key={"N-" + row + "-" + col} />);
       } else if (row < max_len - half_n_floored-1 && col === row_len - 1) {
         this.addClue(clues,"S",row, col, n);
-        // this.addClue(clues,"S",counts.bombs,counts.unknown);
-        // clues.push(<Clue dir="S" value={counts.bombs} total={counts.unknown} key={"S-" + row + "-" + col} />);
-        // clues.push(<Clue dir="S" value={CountBombs.vertical(squares, row, col, n)} total={CountBombs.vertical(squares, row, col, n, true)} key={"S-" + row + "-" + col} />);
       }
     }
 
     // E / W
     if (row_len >= Math.max(3, half_max_len_floored - max_len % 2)) {
-      // let counts = CountBombs.horizontal(squares, row);
       if (row > half_n_floored + 1 && col === row_len - 1 && col !== 0) {
-        // clues.push(<Clue dir="W" value={CountBombs.horizontal(squares, row)} total={CountBombs.horizontal(squares, row, true)} key={"W-" + row + "-" + col} />);
         this.addClue(clues,"W",row, col);
-        // this.addClue(clues,"W",counts.bombs,counts.unknown);
-        // clues.push(<Clue dir="W" value={counts.bombs} total={counts.unknown} key={"W-" + row + "-" + col} />);
       } else if (row < max_len - half_n_floored-1 && col === 0) {
-        // clues.push(<Clue dir="E" value={CountBombs.horizontal(squares, row)} total={CountBombs.horizontal(squares, row, true)} key={"E-" + row + "-" + col} />);
         this.addClue(clues,"E",row, col);
-        // this.addClue(clues,"E",counts.bombs,counts.unknown);
-        // clues.push(<Clue dir="E" value={counts.bombs} total={counts.unknown} key={"E-" + row + "-" + col} />);
       }
     }
 
