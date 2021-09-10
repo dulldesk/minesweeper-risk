@@ -20,28 +20,19 @@ export function get_col_size(n, r, c) {
  * @param {Object[][]} grid_coords - A map of the squares' coordinates relative to the grid to those relative to the grid object
  * @returns {Object} the number of bombs and unknown fields in the diagonal
  */
-export function forward_diagonal(grid, row, col, grid_coords) {
+export function* forward_diagonal(grid, row, col, grid_coords) {
 	let sz = (grid.length-1) / 2 + 1;
 	let grid_col = get_col_relative_to_grid(sz, row, col);
-	let bombs_cnt = 0;
-	let unknown_cnt = 0;
 	
 	if (col === 0) {
 		for (let r=row,c=grid_col; r>row-sz; r--, c++) {
-			bombs_cnt += grid[r][grid_coords[r][c]].type;
-			unknown_cnt += grid[r][grid_coords[r][c]].status === SQUARE_STATUS.REVEALED_EMPTY ? 0 : 1;
+			yield [r,grid_coords[r][c]];
 		}
 	} else {
 		for (let r=row,c=grid_col; r<row+sz; r++, c--) {
-			bombs_cnt += grid[r][grid_coords[r][c]].type;
-			unknown_cnt += grid[r][grid_coords[r][c]].status === SQUARE_STATUS.REVEALED_EMPTY ? 0 : 1;
-		}		
+			yield [r,grid_coords[r][c]];
+		}
 	}
-
-	return {
-		bombs: bombs_cnt,
-		unknown: unknown_cnt
-	};
 }
 
 /**
@@ -52,61 +43,37 @@ export function forward_diagonal(grid, row, col, grid_coords) {
  * @param {Object[][]} grid_coords - A map of the squares' coordinates relative to the grid to those relative to the grid object
  * @returns {Object} the number of bombs and unknown fields in the diagonal
  */
-export function back_diagonal(grid, row, col, grid_coords) {
+export function* back_diagonal(grid, row, col, grid_coords) {
 	let sz = (grid.length-1) / 2 + 1;
 	let grid_col = get_col_relative_to_grid(sz, row, col);
-	let bombs_cnt = 0;
-	let unknown_cnt = 0;
 
 	if (row >= sz - 1) {
 		for (let r=row,c=grid_col; r>row-sz; r--, c--) {
-			bombs_cnt += grid[r][grid_coords[r][c]].type;
-			unknown_cnt += grid[r][grid_coords[r][c]].status === SQUARE_STATUS.REVEALED_EMPTY ? 0 : 1;
+			yield [r,grid_coords[r][c]];
 		}
 	} else {
 		for (let r=row,c=grid_col; r<row+sz; r++, c++) {
-			bombs_cnt += grid[r][grid_coords[r][c]].type;
-			unknown_cnt += grid[r][grid_coords[r][c]].status === SQUARE_STATUS.REVEALED_EMPTY ? 0 : 1;
+			yield [r,grid_coords[r][c]];
 		}		
 	}
-
-	return {
-		bombs: bombs_cnt,
-		unknown: unknown_cnt
-	};
 }
-export function horizontal(grid, row) {
-	let bombs_cnt = 0;
-	let unknown_cnt = 0;
+export function* horizontal(grid, row) {
 	for (let c=0;c<grid[row].length;c++) {
-		bombs_cnt += grid[row][c].type;
-		unknown_cnt += grid[row][c].status === SQUARE_STATUS.REVEALED_EMPTY ? 0 : 1;
+		yield [row,c];
 	}
-	return {
-		bombs: bombs_cnt,
-		unknown: unknown_cnt
-	};
 }
-export function vertical(grid, row, col, sz) {
+export function* vertical(grid, row, col, sz) {
 	let grid_col = get_col_relative_to_grid(sz, row, col);
 	let col_len = get_row_size(sz, grid_col);
 	let r_start = Math.abs(sz-1-grid_col);
 	let c_start = grid_col >= sz ? get_row_size(sz, r_start) - 1 : 0;
-	
-	let bombs_cnt = 0;
-	let unknown_cnt = 0;
 
 	for (let r=r_start, c=c_start, i=0; i < col_len; i++, r++) {
-		bombs_cnt += grid[r][c].type;
-		unknown_cnt += grid[r][c].status === SQUARE_STATUS.REVEALED_EMPTY ? 0 : 1;
+		yield [r,c];
 
 		if (r >= sz - 1) c--;
 		else c++;
 	}
-	return {
-		bombs: bombs_cnt,
-		unknown: unknown_cnt
-	};
 }
 
 export function get_row_type(dir) {

@@ -175,6 +175,14 @@ class Board extends React.Component {
     if (row_type === "vertical") extra_arg = this.size;
     else if (row_type === "back_diagonal" || row_type === "forward_diagonal") extra_arg = this.grid_col_to_square_col;
 
+    let itr = CountBombs[row_type](this.state.squares, row, col, extra_arg);
+    let bombs_cnt = 0; let unknown_cnt = 0;
+    for (let coords of itr) {
+      let square = this.state.squares[coords[0]][coords[1]];
+      bombs_cnt += square.type;
+      unknown_cnt += square.status === SQUARE_STATUS.REVEALED_EMPTY ? 0 : 1;
+    }
+    list.push(<Clue dir={dir} value={bombs_cnt} total={unknown_cnt} key={[dir, row, col].join("-")} />);
   }
   display_clues(row, col) {
     let n = this.size;
