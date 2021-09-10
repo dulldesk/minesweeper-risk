@@ -1,0 +1,28 @@
+@import "../../vars";
+
+.board {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	background-color: #aeccb6; 
+	width: max-content;
+	padding: 2.5rem;
+	margin: auto;
+
+	.toolbox {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.grid {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: center;
+		margin: $size;
+
+		.row {
+			line-height: 0;
+			display: flex;
+		}
+	}
+}

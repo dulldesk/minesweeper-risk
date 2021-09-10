@@ -1,0 +1,31 @@
+export const SQUARE_STATUS = {
+	UNKNOWN: 0,
+	FLAGGED: 1,
+	REVEALED: 2,
+	REVEALED_EMPTY: 2,
+	REVEALED_BOMB: 3,
+	REVEALED_BOMB_SAFE: 3,
+	REVEALED_BOMB_DANGER: 4
+};
+
+export const SQUARE_TYPES = {
+	EMPTY: 0,
+	BOMB: 1
+};
+
+export const TOOLS = {
+	CLEAR: 0,
+	FLAG: 1,
+	DIG: 2
+};
+
+export const LIMITED_TOOLS = [
+	TOOLS.FLAG,
+	TOOLS.DIG
+];
+
+export const GAME_STATUS = {
+	ONGOING: 0,
+	WIN: 1,
+	LOSS: 2
+};

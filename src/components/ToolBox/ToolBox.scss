@@ -1,0 +1,11 @@
+.toolbox {
+	width: 100%;
+
+	.tool {
+		padding: 5px;
+	}
+
+	.tool.selected {
+		background-color: greenyellow;
+	}
+}

@@ -1,0 +1,27 @@
+@import "../../vars";
+
+.wrapper {
+	position: relative;
+	min-height: $size;
+	min-width: $size;
+
+	.square {
+		height: $size;
+		width: $size;
+		background-color: $dark-green;
+		// border: 1px solid grey;
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+	
+		&.revealed {
+			background-color: $dark-dirt;
+		}
+	}
+	&:nth-child(even) .square {
+		background-color: $light-green;
+		&.revealed {
+			background-color: $light-dirt;
+		}
+	}
+}

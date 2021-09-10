@@ -1,0 +1,70 @@
+@import "../../vars";
+
+$column: "S","SE","SW";
+$column-reverse: "N","NW","NE";
+$row: "E";
+$row-reverse: "W";
+
+.clue {
+	position: absolute;
+	display: flex;
+	flex-wrap: nowrap;
+	z-index: 1;
+
+
+	& > * {
+		line-height: 1;
+	}
+
+	@each $dir in $column {
+		&.#{$dir} {
+			flex-direction: column;
+		}
+	}
+	@each $dir in $column-reverse {
+		&.#{$dir} {
+			flex-direction: column-reverse;
+		}
+	}
+	@each $dir in $row-reverse {
+		&.#{$dir} {
+			flex-direction: row-reverse;
+		}
+	}
+
+	&.N, &.S {
+		text-align: center;
+		width: 100%;
+	}
+	&.NE, &.SE {
+		.clue__direction {
+			text-align: right;
+		}
+	}
+	&.NW, &.SW {
+		.clue__direction {
+			text-align: left;
+		}
+	}
+	&.SE, &.S, &.SW {
+		bottom: 115%;
+	}
+	&.SE, &.NE, &.E {
+		right: 115%;
+	}
+	&.SW, &.NW, &.W {
+		left: 115%;
+	}
+	&.N {
+		top: 115%;
+	}
+	&.E, &.W {
+		top: 25%;
+	}
+	&.SE &__value::after,
+	&.NE &__value::after,
+	&.SW &__value::before,
+	&.NW &__value::before {
+		content: '\00a0\00a0\00a0';
+	}
+}
