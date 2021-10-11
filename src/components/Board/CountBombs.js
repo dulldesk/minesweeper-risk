@@ -1,5 +1,3 @@
-import {SQUARE_STATUS} from "../../utils";
-
 export function get_row_size(n, r) {
 	return r >= n ? 4*n - 2*r - 3 : 2*r + 1;
 }

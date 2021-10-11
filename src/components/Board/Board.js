@@ -125,6 +125,14 @@ class Board extends React.Component {
         this.handleSquareClick(parseInt(sq.row),parseInt(sq.col),true);
       }
     }, true);
+    document.addEventListener("auxclick", (e) => {
+      const clue = e.target.closest(".clue");
+      if (clue && e.which === 2) {
+        e.preventDefault();
+        let sq = clue.parentElement.querySelector(".square").dataset;
+        this.handleClueClick(parseInt(sq.row),parseInt(sq.col), new Array(...clue.classList).filter(i => i.length <= 2)[0]);
+      }
+    }, true);
   }
   handleSquareClick(row, col, is_rightclick=false) {
     if (this.state.current_game_status !== GAME_STATUS.ONGOING) return false;
@@ -169,13 +177,36 @@ class Board extends React.Component {
       tool: (this.state.tool === TOOLS.DIG ? TOOLS.CLEAR : TOOLS.DIG)
     });
   }
-  addClue(list, dir, row, col) {
+  getCountBombGenerator(row, col, dir) {
     const row_type = CountBombs.get_row_type(dir);
     let extra_arg;
     if (row_type === "vertical") extra_arg = this.size;
     else if (row_type === "back_diagonal" || row_type === "forward_diagonal") extra_arg = this.grid_col_to_square_col;
 
-    let itr = CountBombs[row_type](this.state.squares, row, col, extra_arg);
+    return CountBombs[row_type](this.state.squares, row, col, extra_arg);
+  }
+  handleClueClick(row, col, dir) {
+    const squares_to_update = clone(this.state.squares);
+    let itr = this.getCountBombGenerator(row, col, dir);
+    
+    let coords_to_clear = [];
+    for (let coords of itr) {
+      let square = squares_to_update[coords[0]][coords[1]];
+      if (square.type === SQUARE_TYPES.BOMB && square.status !== SQUARE_STATUS.FLAGGED && square.status < SQUARE_STATUS.REVEALED) {
+        return;
+      }
+      if (square.status === SQUARE_STATUS.UNKNOWN) {
+        coords_to_clear.push(coords);
+      }
+    }
+
+    for (let coords of coords_to_clear) {
+      this.updateSquare(...coords);
+    }
+  }
+  addClue(list, dir, row, col) {
+    let itr = this.getCountBombGenerator(row, col, dir);
+
     let bombs_cnt = 0; let unknown_cnt = 0;
     for (let coords of itr) {
       let square = this.state.squares[coords[0]][coords[1]];
@@ -186,7 +217,6 @@ class Board extends React.Component {
   }
   display_clues(row, col) {
     let n = this.size;
-    let squares = this.state.squares;
     let max_len = 2*n - 1;
     let row_len = CountBombs.get_row_size(n, row);
     let col_len = CountBombs.get_col_size(n, row, col);
@@ -197,26 +227,26 @@ class Board extends React.Component {
     
     // NW / SE 
     if (row < half_n_floored && col === 0) {
-      this.addClue(clues,"SE", row, col, this.grid_col_to_square_col);
+      this.addClue(clues,"SE", row, col);
     } 
     else if (row >= max_len - half_n_floored && col === row_len - 1) {
-      this.addClue(clues,"NW", row, col, this.grid_col_to_square_col);
+      this.addClue(clues,"NW", row, col);
     }
     
     // NE / SW
     if (row > half_n_floored && row < max_len - half_n_floored && col === 0) {
-      this.addClue(clues,"NE",row, col,this.grid_col_to_square_col);
+      this.addClue(clues,"NE",row, col);
     } 
     else if (row < n && row >= half_n_floored && col === row_len - 1) {
-      this.addClue(clues,"SW",row, col,this.grid_col_to_square_col);
+      this.addClue(clues,"SW",row, col);
     }
 
     // N / S
     if (col_len >= Math.max(3, half_max_len_floored - max_len % 2)) {
       if (row > half_n_floored && col === 0 && row !== max_len-1) {
-        this.addClue(clues,"N",row, col, n);
+        this.addClue(clues,"N",row, col);
       } else if (row < max_len - half_n_floored-1 && col === row_len - 1) {
-        this.addClue(clues,"S",row, col, n);
+        this.addClue(clues,"S",row, col);
       }
     }
 
