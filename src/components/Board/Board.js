@@ -148,6 +148,8 @@ class Board extends React.Component {
       });
     }
 
+    if (this.state.tool !== TOOLS.FLAG && this.state.squares[row][col].status === SQUARE_STATUS.FLAGGED) return false;
+
     this.updateSquare(row, col);
 
     if (this.state.tool === TOOLS.FLAG) {
