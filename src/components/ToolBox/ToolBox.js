@@ -35,6 +35,9 @@ class ToolBox extends React.Component {
 		// this.type = props.type;
 		// this.revealSquare = this.revealSquare.bind(this);
 	// }
+	componentDidMount() {
+		window.twemoji.parse(document.querySelector(".toolbox"));
+	}
 	render() {
 	  return (
 		  <div className="toolbox">

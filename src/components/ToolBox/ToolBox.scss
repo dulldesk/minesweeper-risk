@@ -3,9 +3,24 @@
 
 	.tool {
 		padding: 5px;
-	}
 
-	.tool.selected {
-		background-color: greenyellow;
+		&.selected {
+			background-color: greenyellow;
+		}
+	}
+	.icon {
+		display: inline-block;
+		height: 1rem;
+		position: relative;
+		top: 2px;
+
+		img {
+			max-height: 100%;
+			margin-right: 5px;
+
+			&[alt="🚩"] {
+				margin-right: 3px;
+			}
+		}
 	}
 }

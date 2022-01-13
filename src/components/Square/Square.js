@@ -19,6 +19,9 @@ class Square extends React.Component {
 		if (this.props.game_state === GAME_STATUS.WIN && this.type === SQUARE_TYPES.BOMB) return "⚪";
 		return "";
 	}
+	componentDidUpdate() {
+		window.twemoji.parse(document.querySelector(`.square[data-row="${this.row}"][data-col="${this.col}"]`));
+	}
 	render() {
 	  return (
 		<div className="wrapper">

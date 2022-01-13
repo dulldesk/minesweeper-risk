@@ -17,6 +17,10 @@
 		&.revealed {
 			background-color: $dark-dirt;
 		}
+
+		.emoji {
+			max-height: 1.5rem;
+		}
 	}
 	&:nth-child(even) .square {
 		background-color: $light-green;
