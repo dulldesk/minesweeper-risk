@@ -1,3 +1,7 @@
+# minesweeper-risk
+
+Twist on the classic minesweeper game. Recreation of [this version of the game](https://www.mathsisfun.com/games/minesweeper-risk.html).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
