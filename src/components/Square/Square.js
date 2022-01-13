@@ -16,7 +16,7 @@ class Square extends React.Component {
 		if (this.props.status === SQUARE_STATUS.FLAGGED) return "🚩";
 		if (this.props.status >= SQUARE_STATUS.REVEALED_BOMB) return "💣";
 		if (this.props.game_state === GAME_STATUS.LOSS && this.type === SQUARE_TYPES.BOMB) return "🟠";
-		if (this.props.game_state === GAME_STATUS.WIN && this.type === SQUARE_TYPES.BOMB) return "⚪";
+		if (this.props.game_state === GAME_STATUS.WIN && this.type === SQUARE_TYPES.BOMB) return "🟡";
 		return "";
 	}
 	componentDidUpdate() {
