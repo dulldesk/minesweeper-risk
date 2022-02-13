@@ -1,4 +1,5 @@
 @import "../../utils";
+@import "../../vars";
 
 .toolbox {
 	width: 100%;
@@ -7,7 +8,7 @@
 		padding: 5px;
 
 		&.selected {
-			background-color: greenyellow;
+			background-color: mix($dark-green, $light-green);
 		}
 	}
 	.icon {
