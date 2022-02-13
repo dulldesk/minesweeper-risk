@@ -91,7 +91,7 @@ class Board extends React.Component {
     if (this.state.tool === TOOLS.DIG) {
       remaining_state[TOOLS.DIG]--;
     }
-    if (new_square.status >= SQUARE_STATUS.REVEALED) {
+    if (new_square.status === SQUARE_STATUS.REVEALED) {
       remaining_state[TOOLS.CLEAR]--;
     }
     this.setState({
@@ -130,7 +130,7 @@ class Board extends React.Component {
       if (clue && e.which === 2) {
         e.preventDefault();
         let sq = clue.parentElement.querySelector(".square").dataset;
-        this.handleClueClick(parseInt(sq.row),parseInt(sq.col), new Array(...clue.classList).filter(i => i.length <= 2)[0]);
+        this.handleClueClick(parseInt(sq.row),parseInt(sq.col), new Array(...clue.classList).find(i => i.length <= 2));
       }
     }, true);
   }
@@ -298,10 +298,13 @@ class Board extends React.Component {
             ))}
         </div>
         {
-          this.state.current_game_status === GAME_STATUS.LOSS ? <GameEnd result="loss" /> : ""
-        }
-        {
-          this.state.current_game_status === GAME_STATUS.WIN ? <GameEnd result="win" /> : ""
+          this.state.current_game_status === GAME_STATUS.LOSS
+            ? <GameEnd result="loss" />
+            : (
+              this.state.current_game_status === GAME_STATUS.WIN
+                ? <GameEnd result="win" />
+                : ""
+            )
         }
       </div>
 	  );
