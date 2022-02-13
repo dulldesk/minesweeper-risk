@@ -7,6 +7,7 @@ import { GAME_STATUS, SQUARE_STATUS, SQUARE_TYPES, TOOLS } from '../../utils';
 import ToolBox from '../ToolBox/ToolBox';
 import Clue from '../Clue/Clue';
 import * as CountBombs from './CountBombs';
+import SHOVEL_ICON from "./pick.png";
 
 class GameEnd extends React.Component {
   refreshPage() {
@@ -279,10 +280,12 @@ class Board extends React.Component {
         value: this.state.remaining[TOOLS.FLAG]
       }
     ];
+    let cursor = this.state.tool === TOOLS.DIG ? `url(${SHOVEL_ICON}), crosshair` : "auto";
+
 	  return (
       <div className="board">
         <ToolBox tools={tools} />
-        <div className="grid">
+        <div className="grid" style={{cursor: cursor}}>
           {this.state.squares.map((row, i) => (
               <div className="row" key={i}>
                 {row.map((square_data, j) => (
