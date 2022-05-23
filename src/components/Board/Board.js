@@ -119,16 +119,18 @@ class Board extends React.Component {
     return GAME_STATUS.ONGOING;
   }
   componentDidMount() {
-    document.addEventListener("contextmenu", (e) => {
-      if (e.target.closest(".square")) {
+    document.querySelector(".board").addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    }, true);
+    document.addEventListener("auxclick", (e) => {
+      if (e.target.closest(".square") && e.button === 2) {
         e.preventDefault();
         let sq = e.target.closest(".square").dataset;
         this.handleSquareClick(parseInt(sq.row),parseInt(sq.col),true);
+        return;
       }
-    }, true);
-    document.addEventListener("auxclick", (e) => {
       const clue = e.target.closest(".clue");
-      if (clue && e.which === 2) {
+      if (clue && e.button === 1) {
         e.preventDefault();
         let sq = clue.parentElement.querySelector(".square").dataset;
         this.handleClueClick(parseInt(sq.row),parseInt(sq.col), new Array(...clue.classList).find(i => i.length <= 2));
