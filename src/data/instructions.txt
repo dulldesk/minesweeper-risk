@@ -1,0 +1,7 @@
+A variant of minesweeper. Clear the mines on the board without detonating any of them.
+
+**Right click** a field to flag it (as containing a mine).
+
+**Dig** a field to safely reveal whether it contains a mine by clicking the **shovel**. There are a limited number of digs.
+
+The **clues** on the side indicate how many mines lie in the row/column/diagonal. When hovered, the percentage is the chance that the corresponding unexposed squares contain a mine.

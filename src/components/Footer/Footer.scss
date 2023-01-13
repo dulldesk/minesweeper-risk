@@ -1,0 +1,81 @@
+@import "../../vars";
+@import "../../utils";
+
+.ptr {
+	cursor: pointer;
+	@extend %no-select-allow-ptr;
+}
+footer {
+	$size: 2.1rem;
+
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding: 2.5rem 2.5rem 1.8rem;
+	display: inline-flex;
+	justify-content: space-between;
+	align-items: center;
+
+	font-size: $size;
+	color: darken($bkgd-green, 10%);
+	
+	svg {
+		height: $size;
+		line-height: 0;
+	}
+	span {
+		line-height: 1;
+	}
+}
+.space {
+	height: 0.8rem;
+}
+.modal {
+	$w: #{"clamp(300px, 70%, 700px)"};
+	$mw: #{"min(100%, #{$w})"};
+
+	width: $mw;
+	// position: fixed;
+	// top: 50%;
+	// left: calc(50% - #{$mw}/2);
+	// z-index: 100;
+	padding: 2rem;
+	position: relative;
+
+	text-align: center;
+	color: darken($bkgd-green, 20%);
+	background-color: $board-green;
+	
+	margin: auto;
+	z-index: 100;
+	
+	&__x {
+		font-size: 30px;
+		opacity: 0.7;
+		position: absolute;
+		top: 2px;
+		right: 10px;
+	}
+	> p {
+		font-size: 1.4rem;
+	}
+	a {
+		color: rgba(darken($bkgd-green, 20%), 0.85);
+	}
+}
+%fullscreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+}
+.overlay {
+	@extend %fullscreen;
+	background-color: rgba(black, 0.5);
+}
+.scuffed-wrapper {
+	@extend %fullscreen;
+	display: flex;
+	z-index: 100;
+}

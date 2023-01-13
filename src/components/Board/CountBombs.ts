@@ -1,12 +1,16 @@
-export function get_row_size(n, r) {
+import { Direction, Square } from "../../types";
+import { GridCoordinates } from "./Board";
+
+
+export function get_row_size(n : number, r : number) {
 	return r >= n ? 4*n - 2*r - 3 : 2*r + 1;
 }
 
-export function get_col_relative_to_grid(n, r,c) {
+export function get_col_relative_to_grid(n : number, r : number, c : number) {
 	return (r >= n ? r - n + 1 : n - 1 -r) + c;
 }
 
-export function get_col_size(n, r, c) {
+export function get_col_size(n : number, r : number, c : number) {
 	return get_row_size(n, get_col_relative_to_grid(n, r,c));
 }
 
@@ -18,7 +22,7 @@ export function get_col_size(n, r, c) {
  * @param {Object[][]} grid_coords - A map of the squares' coordinates relative to the grid to those relative to the grid object
  * @returns {Object} the number of bombs and unknown fields in the diagonal
  */
-export function* forward_diagonal(grid, row, col, grid_coords) {
+export function* forward_diagonal(grid : Square[][], row : number, col : number, grid_coords : GridCoordinates) {
 	let sz = (grid.length-1) / 2 + 1;
 	let grid_col = get_col_relative_to_grid(sz, row, col);
 	
@@ -41,7 +45,7 @@ export function* forward_diagonal(grid, row, col, grid_coords) {
  * @param {Object[][]} grid_coords - A map of the squares' coordinates relative to the grid to those relative to the grid object
  * @returns {Object} the number of bombs and unknown fields in the diagonal
  */
-export function* back_diagonal(grid, row, col, grid_coords) {
+export function* back_diagonal(grid : Square[][], row : number, col : number, grid_coords : GridCoordinates) {
 	let sz = (grid.length-1) / 2 + 1;
 	let grid_col = get_col_relative_to_grid(sz, row, col);
 
@@ -55,12 +59,12 @@ export function* back_diagonal(grid, row, col, grid_coords) {
 		}		
 	}
 }
-export function* horizontal(grid, row) {
+export function* horizontal(grid : Square[][], row : number) {
 	for (let c=0;c<grid[row].length;c++) {
 		yield [row,c];
 	}
 }
-export function* vertical(grid, row, col, sz) {
+export function* vertical(grid : Square[][], row : number, col : number, sz : number) {
 	let grid_col = get_col_relative_to_grid(sz, row, col);
 	let col_len = get_row_size(sz, grid_col);
 	let r_start = Math.abs(sz-1-grid_col);
@@ -74,7 +78,7 @@ export function* vertical(grid, row, col, sz) {
 	}
 }
 
-export function get_row_type(dir) {
+export function get_row_type(dir : Direction) {
     switch (dir) {
 		case "SE":
 		case "NW":

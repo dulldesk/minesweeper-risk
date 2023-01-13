@@ -4,10 +4,11 @@
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
-	background-color: #aeccb6; 
+	background-color: $board-green; 
 	width: max-content;
 	padding: 2.5rem;
 	margin: auto;
+	position: relative;
 
 	.toolbox {
 		display: flex;

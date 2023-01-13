@@ -1,0 +1,1 @@
+*Tip: you can middle click a clue to clear the entire row/column/diagonal, if you're certain that there are no mines in it.*

@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
+import { Direction } from '../../types';
 import './Clue.scss';
 
-class Clue extends React.Component {
-	static ARROWS = {
+interface ClueProps {
+	dir: Direction,
+	value: number,
+	total: number,
+	onClick?: MouseEventHandler
+}
+export type ClueArray = JSX.Element[];
+
+class Clue extends React.Component<ClueProps> {
+	static ARROWS : {[key: string] : string} = {
 		'N': '↑',
 		'NE': '↗',
 		'E': '→',
@@ -11,8 +20,12 @@ class Clue extends React.Component {
 		'SW': '↙',
 		'W': '←',
 		'NW': '↖'
-	};
-	constructor(props) {
+	} as const;
+	arrow: string;
+	value: number;
+	percent: string = "";
+
+	constructor(props : ClueProps) {
 		super(props);
 	// 	this.status = props.status
 	// 	this.type = props.type;
@@ -25,23 +38,23 @@ class Clue extends React.Component {
 	set_percentage_value() {
 		this.percent = this.as_percentage(this.props.value, this.props.total);
 	}
-	as_percentage(n, t) {
+	as_percentage(n : number, t : number) : string {
 		return (t === 0 ? 0 : Number((n / t * 100).toFixed(1))) + "%";
 	}
-	handleMouseOver(e) {
-		e.target.textContent = this.percent;
+	handleMouseOver(e: React.MouseEvent) {
+		(e.target as Element).textContent = this.percent;
 	}
-	handleMouseLeave(e) {
-		e.target.textContent = this.value;
-	}
-	componentDidUpdate(prevProps) {
+	handleMouseLeave(e: React.MouseEvent) {
+		(e.target as Element).textContent = this.value as unknown as string;
+	};
+	componentDidUpdate(prevProps : ClueProps) {
 		if (prevProps.total !== this.props.total) {
 			this.set_percentage_value();
 		}
 	}
 	render() {
 	  return (
-		<div className={"clue " + this.props.dir}>
+		<div className={"clue " + this.props.dir} onAuxClick={this.props.onClick}>
 			<span className="clue__value" onMouseEnter={this.handleMouseOver} onMouseLeave={this.handleMouseLeave}>{this.value}</span>
 			<span className="clue__direction">{this.arrow}</span>
 		</div>
