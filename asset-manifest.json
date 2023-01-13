@@ -1,20 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.582671e2.chunk.css",
-    "main.js": "/static/js/main.e8e09fc5.chunk.js",
-    "main.js.map": "/static/js/main.e8e09fc5.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c688119b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c688119b.js.map",
-    "static/js/2.9575dd27.chunk.js": "/static/js/2.9575dd27.chunk.js",
-    "static/js/2.9575dd27.chunk.js.map": "/static/js/2.9575dd27.chunk.js.map",
+    "main.css": "/static/css/main.b3e80d65.css",
+    "main.js": "/static/js/main.daf121b9.js",
     "index.html": "/index.html",
-    "static/css/main.582671e2.chunk.css.map": "/static/css/main.582671e2.chunk.css.map",
-    "static/js/2.9575dd27.chunk.js.LICENSE.txt": "/static/js/2.9575dd27.chunk.js.LICENSE.txt"
+    "static/media/instructions.txt": "/static/media/instructions.50935b83f83d22c638d3.txt",
+    "static/media/rotate-cw.svg": "/static/media/rotate-cw.e172c801445f5d20f7aa540e4ab4929c.svg",
+    "static/media/tips.txt": "/static/media/tips.c7764084463dc8141aa0.txt",
+    "static/media/footer.txt": "/static/media/footer.c622fa48f5669b0a99ee.txt",
+    "main.b3e80d65.css.map": "/static/css/main.b3e80d65.css.map",
+    "main.daf121b9.js.map": "/static/js/main.daf121b9.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.c688119b.js",
-    "static/js/2.9575dd27.chunk.js",
-    "static/css/main.582671e2.chunk.css",
-    "static/js/main.e8e09fc5.chunk.js"
+    "static/css/main.b3e80d65.css",
+    "static/js/main.daf121b9.js"
   ]
 }
